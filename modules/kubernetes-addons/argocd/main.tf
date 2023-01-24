@@ -23,18 +23,12 @@ resource "helm_release" "argocd_application" {
   name      = each.key
   chart     = "${path.module}/argocd-application/helm"
   version   = "1.0.0"
-  namespace = local.helm_config["namespace"]
+  namespace = try(each.value.namespace, local.helm_config["namespace"])
 
   # Application Meta.
   set {
     name  = "name"
     value = each.key
-    type  = "string"
-  }
-
-  set {
-    name  = "namespace"
-    value = each.value.namespace
     type  = "string"
   }
 
