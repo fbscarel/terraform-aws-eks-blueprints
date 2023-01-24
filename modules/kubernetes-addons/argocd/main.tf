@@ -33,6 +33,12 @@ resource "helm_release" "argocd_application" {
   }
 
   set {
+    name  = "namespace"
+    value = each.value.namespace
+    type  = "string"
+  }
+
+  set {
     name  = "project"
     value = each.value.project
     type  = "string"
